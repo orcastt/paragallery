@@ -5,8 +5,50 @@
   var SITE = window.SITE || {};
   var $ = function (s) { return document.querySelector(s); };
 
-  $('#hero-title').textContent = SITE.heroTitle || 'Selected Works';
-  $('#hero-sub').textContent = SITE.heroSubtitle || '';
+  // ── About hero (top of the page) ──
+  var about = SITE.about || {};
+  var headingEl = $('#about-heading');
+  if (headingEl) {
+    (about.heading || 'About Me').split('\n').forEach(function (line, i) {
+      if (i) headingEl.appendChild(document.createElement('br'));
+      headingEl.appendChild(document.createTextNode(line));
+    });
+  }
+  var heroImg = $('#about-hero-img');
+  if (heroImg) {
+    var heroFallback = 'assets/about-hero.svg';
+    heroImg.src = about.heroImage || heroFallback;
+    heroImg.addEventListener('error', function () {
+      if (heroImg.src.indexOf('about-hero.svg') === -1) heroImg.src = heroFallback;
+    });
+  }
+
+  var aboutBio = $('#about-bio');
+  if (aboutBio) {
+    (about.bio || []).forEach(function (text) {
+      var p = document.createElement('p');
+      p.textContent = text;
+      aboutBio.appendChild(p);
+    });
+  }
+  var aboutContact = $('#about-contact');
+  if (aboutContact) {
+    var c = about.contact || {};
+    var items = [];
+    if (c.email) items.push({ label: 'Email', href: 'mailto:' + c.email });
+    if (c.instagram) items.push({ label: 'Instagram', href: c.instagram });
+    if (c.github) items.push({ label: 'GitHub', href: c.github });
+    items.forEach(function (it) {
+      var a = document.createElement('a');
+      a.textContent = it.label;
+      a.href = it.href;
+      if (it.href.indexOf('http') === 0) { a.target = '_blank'; a.rel = 'noopener'; }
+      aboutContact.appendChild(a);
+    });
+  }
+
+  var worksLabel = $('#works-label');
+  if (worksLabel) worksLabel.textContent = SITE.worksTitle || 'Selected Works';
 
   var grid = $('#grid');
   var emptyEl = $('#empty');
