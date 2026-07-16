@@ -20,14 +20,14 @@ window.SITE = {
   // ── 顶部「关于我」大图区 ──
   about: {
     // 左上角叠加的大标题（可用 \n 换行）。改成你的名字或标语。
-    heading: 'Parametric\nDesigner',
+    heading: 'Parametric\nGallery',
     // 你的 16:9 横向头像：传到 assets/ 后改成对应文件名，例如 'assets/about-hero.jpg'。
     // 传之前先用这张占位图。人物/头部放在图片右侧效果最好。
     heroImage: 'assets/about-hero.svg',
-    // 居中简介，每个字符串是一段。随便改成你自己的。
+    // 简介，每个字符串是一段（英文）。随便改成你自己的。
     bio: [
-      '我是一名参数化设计师，用算法与计算几何探索形态的生成逻辑。',
-      '每一件作品都由一套可调的参数系统驱动——改变几个变量，同一个原型便演化出成百上千种状态。这里记录的，正是这些「同源而异形」的瞬间。',
+      'A parametric designer exploring the generative logic of form through algorithms and computational geometry.',
+      'Each piece is driven by a tunable parameter system — shift a few variables and one prototype evolves into hundreds of states. A record of those moments: same origin, different form.',
     ],
     // 联系方式（留空的会自动隐藏）
     contact: {
