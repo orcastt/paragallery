@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#141414"/>
+  <g fill="none" stroke="#d4af6a" stroke-opacity="0.42" stroke-width="4">
+    <circle cx="1380" cy="420" r="165"/>
+    <path d="M1150 1080 C1150 770 1255 650 1380 650 C1505 650 1610 770 1610 1080"/>
+  </g>
+  <text x="1380" y="1010" text-anchor="middle" font-family="Oswald, sans-serif" font-size="30" letter-spacing="12" fill="#8a744a">YOUR 16:9 PORTRAIT</text>
+</svg>
