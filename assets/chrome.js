@@ -1,4 +1,4 @@
-/* Shared header/footer wiring for every page (reads window.SITE). */
+/* Shared header/footer wiring (reads window.SITE). */
 (function () {
   'use strict';
   var SITE = window.SITE || {};
@@ -16,15 +16,5 @@
     link.textContent = SITE.link.label || 'Link';
     link.href = SITE.link.url;
     link.hidden = false;
-  }
-
-  // Active nav item based on the current file.
-  var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  var onAbout = page === 'about.html';
-  var links = document.querySelectorAll('[data-nav]');
-  for (var i = 0; i < links.length; i++) {
-    var target = links[i].getAttribute('data-nav');
-    var active = (target === 'about' && onAbout) || (target === 'index' && !onAbout);
-    links[i].classList.toggle('active', active);
   }
 })();
