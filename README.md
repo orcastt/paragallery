@@ -10,26 +10,34 @@
 
 ---
 
-## 📥 如何添加作品图
+## 📥 如何添加作品图（一个作品一个文件夹）
 
-把图片放进 `images/` 文件夹，命名后推送即可：
+在 `images/` 里，**给每个作品建一个文件夹**，把该作品的图放进去：
 
 ```
-Snowflakes (1).jpg
-Snowflakes (2).jpg      ← 同名多张 → 自动归为一个可轮播的 post
-Monument (1).jpg
-Vase (1).jpg
+images/
+  Snowflakes/          ← 文件夹名 = 卡片下方显示的名字
+    1.jpg
+    2.jpg              ← 里面按文件名排序，第一张自动当封面
+    3.jpg
+  Vase/
+    1.jpg
+    2.jpg
+  Monument/
+    1.jpg
 ```
 
-- 作品图建议 **3:4 竖图**（卡片按 3:4 显示，不会裁切）
+- **文件夹名** = 作品标题（卡片下方文字，自动大写显示）。可带空格，如 `Space Grow/`
+- 文件夹里的图**随便命名**（`1.jpg / 2.jpg` 或 `a.jpg / b.jpg` 都行），按文件名自然排序，第一张当封面
+- 作品图建议 **3:4 竖图**（卡片按 3:4 显示，不裁切）
 - 支持 `jpg / png / webp`；⚠️ iPhone 的 `.heic` 请先导出成 JPG
-- `(1)` 自动成为封面；半角 `(1)` 或全角 `（1）` 都行
-- 项目名可带空格、中文
-- **想控制排列顺序**：文件名前加 8 位日期（如 `20250824Monument (1).jpg`），按日期倒序但**不显示日期**
+- **想控制作品排序**：文件夹名前加 8 位日期，如 `20250824 Monument/` → 按日期倒序（新的在前），**日期不显示**
 
-上传：仓库 `images/` → `Add file → Upload files` → 拖入 → Commit；或 `git add images && git commit && git push`。推送后刷新即生效。
+> 也兼容旧的「平铺」方式：直接把 `Snowflakes (1).jpg` 放 `images/` 根目录、同名多张成组。但**推荐用文件夹**，更好管理。
 
-> ⚠️ 当前 `images/` 里的 16 张 SVG 是演示占位图，替换成你的真图时直接删掉。
+上传：仓库 `images/` → 点进/新建作品文件夹 → `Add file → Upload files` → 拖入 → Commit；或本地 `git add images && git commit && git push`。推送后刷新即生效。
+
+> ⚠️ 当前 `images/` 里的 4 个演示文件夹（Snowflakes/Vase/Moth/Monument）是占位示例，替换成你的真作品时直接删掉这些文件夹。
 
 ---
 
@@ -57,7 +65,7 @@ Vase (1).jpg
 
 ```js
 about: {
-  heading: 'Parametric\nDesigner',       // 左上大标题，可用 \n 换行；改成你的名字/标语
+  heading: 'Parametric\nGallery',        // 左上大标题，可用 \n 换行；改成你的名字/标语
   heroImage: 'assets/about-hero.jpg',    // 你的 16:9 横向头像（人物放右侧最佳）
   bio: [
     '第一段简介……',
@@ -123,9 +131,11 @@ git add -f manifest.json && git commit -m "Pin manifest" && git push
 │   ├── style.css               # 黑金视觉系统
 │   ├── fonts.css + fonts/      # 自托管 Oswald
 │   ├── chrome.js               # 顶栏/页脚
-│   ├── gallery-core.js         # 文件名 → post 分组（前后端共用）
-│   ├── app.js                  # 关于我渲染 + 网格 + 弹层
+│   ├── gallery-core.js         # 文件夹/文件名 → post 分组（前后端共用）
+│   ├── app.js                  # 关于我渲染 + 网格 + 弹层 + 读取目录树
 │   └── about-hero.svg          # 16:9 头像占位图
-├── images/                     # ← 你的作品图都放这里
+├── images/                     # ← 一个作品一个文件夹放这里
+│   ├── Snowflakes/  (1.jpg 2.jpg …)
+│   └── Vase/        (1.jpg 2.jpg …)
 └── scripts/build-manifest.js   # 可选：生成固定 manifest.json
 ```

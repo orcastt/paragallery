@@ -11,16 +11,28 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { groupFiles } = require('../assets/gallery-core.js');
+const { groupPaths } = require('../assets/gallery-core.js');
 
 const ROOT = path.join(__dirname, '..');
 const IMG_DIR = path.join(ROOT, 'images');
 const OUT = path.join(ROOT, 'manifest.json');
 
+// Collect image paths relative to images/, recursing into subfolders.
+function walk(dir, base) {
+  let out = [];
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (e.name.charAt(0) === '.') continue;
+    const rel = base ? base + '/' + e.name : e.name;
+    if (e.isDirectory()) out = out.concat(walk(path.join(dir, e.name), rel));
+    else out.push(rel);
+  }
+  return out;
+}
+
 // An empty gallery is a valid state the frontend handles, so a missing images/
 // folder still produces a valid (empty) manifest rather than an error.
-const files = fs.existsSync(IMG_DIR) ? fs.readdirSync(IMG_DIR) : [];
-const { projects, skipped } = groupFiles(files);
+const paths = fs.existsSync(IMG_DIR) ? walk(IMG_DIR, '') : [];
+const { projects, skipped } = groupPaths(paths);
 
 fs.writeFileSync(OUT, JSON.stringify({ projects }, null, 2) + '\n');
 
