@@ -94,23 +94,27 @@
     } catch (_) {}
 
     if (SITE.repo && window.GalleryCore) {
-      var files = await listRepoImages(SITE.repo, SITE.branch || 'main');
-      return GalleryCore.groupFiles(files).projects.filter(function (p) { return p.images.length; });
+      var paths = await listRepoImages(SITE.repo, SITE.branch || 'main');
+      return GalleryCore.groupPaths(paths).projects.filter(function (p) { return p.images.length; });
     }
     return [];
   }
 
+  // One recursive Git Trees request returns the whole repo tree, so any number
+  // of image folders costs a single API call (no per-folder requests).
   async function listRepoImages(repo, branch) {
-    var url = 'https://api.github.com/repos/' + repo + '/contents/images?ref=' + encodeURIComponent(branch);
-    var cacheKey = 'pg:list:' + repo + ':' + branch;
+    var url = 'https://api.github.com/repos/' + repo + '/git/trees/' + encodeURIComponent(branch) + '?recursive=1';
+    var cacheKey = 'pg:tree:' + repo + ':' + branch;
     try {
       var r = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
       if (!r.ok) throw new Error('GitHub API ' + r.status);
-      var items = await r.json();
-      if (!Array.isArray(items)) throw new Error('unexpected API response');
-      var files = items.filter(function (i) { return i.type === 'file'; }).map(function (i) { return i.name; });
-      try { sessionStorage.setItem(cacheKey, JSON.stringify(files)); } catch (_) {}
-      return files;
+      var data = await r.json();
+      if (!data || !Array.isArray(data.tree)) throw new Error('unexpected API response');
+      var paths = data.tree
+        .filter(function (e) { return e.type === 'blob' && e.path.indexOf('images/') === 0; })
+        .map(function (e) { return e.path.slice('images/'.length); });
+      try { sessionStorage.setItem(cacheKey, JSON.stringify(paths)); } catch (_) {}
+      return paths;
     } catch (e) {
       try {
         var cached = JSON.parse(sessionStorage.getItem(cacheKey));
