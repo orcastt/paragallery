@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Parametric Gallery</title>
+  <!-- Self-hosted fonts (Oswald + Manrope) — no external dependency. -->
+  <link rel="stylesheet" href="assets/fonts.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23d4af6a' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%23d4af6a'/%3E%3C/svg%3E">
+  <script src="assets/site.js"></script>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="wordmark" id="wordmark" href="index.html"></a>
+    <nav class="nav">
+      <a class="nav-link" data-nav="index" href="index.html">Works</a>
+      <a class="nav-link" data-nav="about" href="about.html">About</a>
+    </nav>
+    <a id="external-link" class="top-link" target="_blank" rel="noopener" hidden></a>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="kicker">About</p>
+      <h1 class="page-title" id="about-name"></h1>
+    </section>
+
+    <section class="about">
+      <div class="about-portrait">
+        <img id="about-portrait" alt="">
+      </div>
+      <div>
+        <div class="about-bio" id="about-bio"></div>
+        <div class="about-contact" id="about-contact"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span id="footer-author"></span>
+  </footer>
+
+  <script src="assets/about.js"></script>
+  <script src="assets/chrome.js"></script>
+</body>
+</html>
