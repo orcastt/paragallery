@@ -135,7 +135,7 @@
     projects.forEach(function (p) {
       var card = document.createElement('button');
       card.className = 'card';
-      card.setAttribute('aria-label', p.title + '，' + p.images.length + ' 张图');
+      card.setAttribute('aria-label', p.title + ' — ' + p.images.length + ' images');
 
       var media = document.createElement('div');
       media.className = 'card-media';
@@ -183,7 +183,7 @@
     project.images.forEach(function (src, i) {
       var t = document.createElement('button');
       t.className = 'lb-thumb';
-      t.setAttribute('aria-label', '第 ' + (i + 1) + ' 张');
+      t.setAttribute('aria-label', 'Image ' + (i + 1));
       var ti = document.createElement('img');
       ti.src = src;
       ti.alt = '';

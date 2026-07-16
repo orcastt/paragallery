@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,8 +41,8 @@
       <p class="section-label" id="works-label"></p>
       <div class="grid" id="grid"></div>
       <p class="empty" id="empty" hidden>
-        还没有作品 —— 把图片放进 <code>images/</code> 文件夹并推送即可。<br>
-        命名如 <code>Snowflakes (1).jpg</code>，同名多张自动成组。
+        No works yet — drop images into the <code>images/</code> folder and push.<br>
+        Name them like <code>Snowflakes (1).jpg</code>; same-name files group into one post.
       </p>
     </section>
   </main>
@@ -53,7 +53,7 @@
   </footer>
 
   <!-- ── Post lightbox ── -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="作品预览" hidden>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Work preview" hidden>
     <div class="lb-backdrop" data-close></div>
 
     <header class="lb-head">
@@ -61,16 +61,16 @@
         <h2 class="lb-title" id="lb-title"></h2>
         <p class="lb-sub"><span id="lb-counter"></span></p>
       </div>
-      <button class="lb-btn lb-close" data-close aria-label="关闭 (Esc)">✕</button>
+      <button class="lb-btn lb-close" data-close aria-label="Close (Esc)">✕</button>
     </header>
 
-    <button class="lb-btn lb-arrow lb-prev" id="lb-prev" aria-label="上一张 (←)">←</button>
+    <button class="lb-btn lb-arrow lb-prev" id="lb-prev" aria-label="Previous (←)">←</button>
     <figure class="lb-stage" id="lb-stage">
       <img id="lb-img" alt="" draggable="false">
     </figure>
-    <button class="lb-btn lb-arrow lb-next" id="lb-next" aria-label="下一张 (→)">→</button>
+    <button class="lb-btn lb-arrow lb-next" id="lb-next" aria-label="Next (→)">→</button>
 
-    <nav class="lb-thumbs" id="lb-thumbs" aria-label="本组图片"></nav>
+    <nav class="lb-thumbs" id="lb-thumbs" aria-label="Images in this post"></nav>
   </div>
 
   <script src="assets/gallery-core.js"></script>
