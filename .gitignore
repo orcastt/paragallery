@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+node_modules/
+
+# manifest.json is optional — the live site reads images/ from the GitHub API.
+# It's ignored so a stale committed copy can't shadow the live listing. Commit
+# it deliberately (after `node scripts/build-manifest.js`) only if you want to
+# pin content / go offline / serve from a private repo.
+manifest.json

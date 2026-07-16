@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parametric Gallery — 参数化设计作品集</title>
+  <meta name="description" content="A curated gallery of parametric design studies — computational geometry, generative structure, gold on black.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Load web fonts non-blocking: the page paints instantly on the system-font
+       fallbacks (declared in style.css) even where Google Fonts is unreachable,
+       e.g. mainland China. The stylesheet upgrades the two Latin display fonts
+       once it arrives. -->
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap"
+        onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0a08'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23d8b878' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23d8b878'/%3E%3C/svg%3E">
+  <script>
+    // ── Site configuration — edit these lines to personalise the gallery ──
+    window.SITE = {
+      wordmark: 'PARAMETRIC GALLERY',
+      heroTitle: 'Parametric Studies',
+      heroSubtitle: 'Computational geometry · generative structure · one prototype, many states',
+      author: '@TT',
+      // The gallery reads the images/ file list live from this public repo, so
+      // dropping files into images/ and pushing is all it takes — no build step.
+      repo: 'orcastt/paragallery',
+      branch: 'main',
+      // Optional external link shown top-right (set to null to hide)
+      link: { label: 'GitHub', url: 'https://github.com/orcastt/paragallery' },
+    };
+  </script>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="wordmark" href="#" id="wordmark"></a>
+    <nav class="topbar-right">
+      <a id="external-link" class="top-link" target="_blank" rel="noopener" hidden></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="hero-kicker">SELECTED WORKS</p>
+      <h1 class="hero-title" id="hero-title"></h1>
+      <p class="hero-sub" id="hero-sub"></p>
+      <div class="hero-rule" aria-hidden="true"><span></span><i>◆</i><span></span></div>
+    </section>
+
+    <nav class="filters" id="filters" aria-label="按年份筛选"></nav>
+
+    <section class="grid" id="grid" aria-live="polite"></section>
+
+    <p class="empty" id="empty" hidden>
+      还没有作品 —— 把图片放进 <code>images/</code> 文件夹并推送即可。<br>
+      命名格式：<code>20240711Snowflakes (1).jpg</code>
+    </p>
+  </main>
+
+  <footer class="footer">
+    <span id="footer-author"></span>
+    <span class="footer-dot">·</span>
+    <span id="footer-count"></span>
+  </footer>
+
+  <!-- ── Post lightbox ── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="作品预览" hidden>
+    <div class="lb-backdrop" data-close></div>
+
+    <header class="lb-head">
+      <div class="lb-meta">
+        <h2 class="lb-title" id="lb-title"></h2>
+        <p class="lb-sub"><span id="lb-date"></span><span class="lb-metadot">·</span><span id="lb-counter"></span></p>
+      </div>
+      <button class="lb-btn lb-close" data-close aria-label="关闭 (Esc)">✕</button>
+    </header>
+
+    <button class="lb-btn lb-arrow lb-prev" id="lb-prev" aria-label="上一张 (←)">←</button>
+    <figure class="lb-stage" id="lb-stage">
+      <img id="lb-img" alt="" draggable="false">
+    </figure>
+    <button class="lb-btn lb-arrow lb-next" id="lb-next" aria-label="下一张 (→)">→</button>
+
+    <nav class="lb-thumbs" id="lb-thumbs" aria-label="本组图片"></nav>
+  </div>
+
+  <script src="assets/gallery-core.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
