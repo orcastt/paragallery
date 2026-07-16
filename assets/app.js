@@ -50,23 +50,61 @@
   // Attach hash navigation up front so a later render error can't kill it.
   window.addEventListener('hashchange', openFromHash);
 
-  fetch('manifest.json', { cache: 'no-store' })
-    .then((r) => {
-      if (!r.ok) throw new Error('manifest.json not found');
-      return r.json();
-    })
-    .catch(() => {
-      // Only a genuine fetch/parse failure means "no manifest" → empty state.
-      emptyEl.hidden = false;
-      return null;
-    })
-    .then((data) => {
-      if (!data) return;
-      projects = (data.projects || []).filter((p) => p.images && p.images.length);
+  loadProjects()
+    .then((list) => {
+      projects = list;
       renderFilters();
       renderGrid();
       openFromHash();
+    })
+    .catch(() => {
+      emptyEl.hidden = false;
     });
+
+  // Two sources, in priority order:
+  //   1. A committed manifest.json (optional — for offline / private repos, or
+  //      if you ran scripts/build-manifest.js).
+  //   2. The live GitHub Contents API listing of images/ (default, zero build).
+  async function loadProjects() {
+    try {
+      const r = await fetch('manifest.json', { cache: 'no-store' });
+      if (r.ok) {
+        const data = await r.json();
+        const ps = (data.projects || []).filter((p) => p.images && p.images.length);
+        if (ps.length) return ps;
+      }
+    } catch (_) { /* no committed manifest — fall through to live listing */ }
+
+    if (SITE.repo && window.GalleryCore) {
+      const files = await listRepoImages(SITE.repo, SITE.branch || 'main');
+      return GalleryCore.groupFiles(files).projects.filter((p) => p.images.length);
+    }
+    return [];
+  }
+
+  // Lists images/ via the public GitHub API (no auth needed for public repos).
+  // One request per page load; the result is cached for the session and reused
+  // if a later request is rate-limited (60/hour/IP unauthenticated).
+  async function listRepoImages(repo, branch) {
+    const url = `https://api.github.com/repos/${repo}/contents/images?ref=${encodeURIComponent(branch)}`;
+    const cacheKey = `pg:list:${repo}:${branch}`;
+    try {
+      const r = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('GitHub API ' + r.status);
+      const items = await r.json();
+      if (!Array.isArray(items)) throw new Error('unexpected API response');
+      // Contents API returns up to 1000 entries per directory — ample here.
+      const files = items.filter((i) => i.type === 'file').map((i) => i.name);
+      try { sessionStorage.setItem(cacheKey, JSON.stringify(files)); } catch (_) {}
+      return files;
+    } catch (e) {
+      try {
+        const cached = JSON.parse(sessionStorage.getItem(cacheKey));
+        if (Array.isArray(cached)) return cached;
+      } catch (_) {}
+      throw e;
+    }
+  }
 
   function fmtDate(iso) {
     return iso ? iso.replace(/-/g, '.') : '';

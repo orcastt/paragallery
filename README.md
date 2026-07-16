@@ -22,7 +22,7 @@
 命名规则 = **`日期(8位)` + `项目名` + `(序号)`**，也就是你现在已有的命名方式，直接拖进来就能用。
 
 - 支持 `jpg / png / webp / gif / avif / svg`
-- ⚠️ **iPhone 默认的 `.heic` 不被浏览器支持**，请先导出成 JPG（iOS：设置 → 相机 → 格式 → 兼容性最佳，或用分享导出）。不支持的格式会被静默跳过，可在 Action 运行日志里看到 `::warning`
+- ⚠️ **iPhone 默认的 `.heic` 不被浏览器支持**，请先导出成 JPG（iOS：设置 → 相机 → 格式 → 兼容性最佳，或用分享导出）。不支持的格式会被自动忽略
 - 括号里的序号决定组内顺序；`(1)` 自动成为封面（半角 `(1)` 或全角 `（1）` 都行）
 - 没有序号的文件（如 `20251122Tidal.jpg`）会成为单图 post
 - 项目名可以带空格（`Mountain blcok`）、中文也可以
@@ -38,21 +38,24 @@
    git add images && git commit -m "Add new works" && git push
    ```
 
-推送后 GitHub Action 会自动扫描 `images/`、重新生成 `manifest.json` 并发布网站，约 1 分钟生效。**不需要手动维护任何列表。**
+网站会**在浏览器里直接读取 `images/` 目录的文件列表**（通过 GitHub 公开 API）并自动分组，推送后刷新即生效。**不需要 GitHub Actions，不需要构建，不需要手动维护任何列表。**
 
 > ⚠️ 当前 `images/` 里的 16 张 SVG 是演示占位图，替换成你的真图时直接删掉它们即可。
 
 ---
 
-## 🚀 首次启用 GitHub Pages（只需一次）
+## 🚀 首次启用 GitHub Pages（只需一次，不消耗 Actions 配额）
 
-> ⚠️ 顺序很重要：**先启用 Pages，再合并 PR**。否则合并会立刻触发一次部署，而此时 Pages 还没开启，那次运行会红 ✗ 失败（属正常，按下面第 4 步重跑即可）。
+本站是纯静态页面，用 **"从分支部署"** 模式，**完全不跑 GitHub Actions**：
 
-1. 仓库 **Settings → Pages → Build and deployment → Source** 选 **GitHub Actions**（此时还没有 workflow 也能选）
-2. 合并本 PR 到 `main`
-3. 打开 **Actions** 页签查看 `Deploy gallery to GitHub Pages` 的运行
-4. 如果那次运行失败（在启用 Pages 之前触发），点进去 **Re-run all jobs**；或直接点 `Run workflow` 手动跑一次（workflow 支持手动触发）
-5. 变绿后访问 https://orcastt.github.io/paragallery/
+1. 合并本 PR 到 `main`
+2. 仓库 **Settings → Pages → Build and deployment → Source** 选 **Deploy from a branch**
+3. **Branch** 选 `main`、文件夹选 `/ (root)`，点 **Save**
+4. 等一两分钟，访问 https://orcastt.github.io/paragallery/
+
+> 之后每次往 `images/` 推图，网站都会自动读取最新列表——无需再碰 Pages 设置。
+>
+> ℹ️ 仓库需为**公开**（读取文件列表用的是免登录的公开 API，约每小时每访客 60 次上限，个人作品集完全够用）。若你想改成私有仓库、或不想依赖 API，见下方「进阶：固定 manifest」。
 
 ---
 
@@ -66,6 +69,8 @@ window.SITE = {
   heroTitle: 'Parametric Studies',  // 首页大标题
   heroSubtitle: '…',                // 副标题
   author: '@TT',                    // 页脚署名
+  repo: 'orcastt/paragallery',      // 读取 images/ 列表的公开仓库
+  branch: 'main',                   // 读取哪个分支
   link: { label: 'GitHub', url: 'https://github.com/orcastt/paragallery' }, // 右上角链接，设为 null 隐藏
 };
 ```
@@ -76,25 +81,43 @@ window.SITE = {
 
 ## 🧪 本地预览
 
-`manifest.json` 不纳入版本库（由 CI 自动生成），所以本地预览**必须先跑一次生成脚本**，否则页面会显示「还没有作品」：
+浏览器直接读线上 GitHub 列表，所以本地起个静态服务器就能预览线上内容：
 
 ```bash
-node scripts/build-manifest.js   # 必需：扫描 images/ 生成 manifest.json
 python3 -m http.server 8000      # 或任何静态服务器
 # 打开 http://localhost:8000
 ```
+
+想预览「本地还没推上去的图」，先跑一次生成脚本，页面会优先用本地 `manifest.json`：
+
+```bash
+node scripts/build-manifest.js   # 扫描本地 images/ 生成 manifest.json
+```
+
+---
+
+## 🔧 进阶：固定 manifest（私有仓库 / 离线 / 不依赖 API）
+
+网站默认从 GitHub 公开 API 读 `images/` 列表。如果你把仓库改成私有、或不想依赖 API，可以改用「固定清单」：
+
+```bash
+node scripts/build-manifest.js   # 生成 manifest.json
+git add -f manifest.json && git commit -m "Pin manifest" && git push
+```
+
+一旦仓库里存在非空的 `manifest.json`，网站就优先用它、不再调 API。代价是每次加图都要重跑这条命令并提交。
 
 ## 📁 结构
 
 ```
 ├── index.html                  # 页面骨架 + 站点配置
+├── .nojekyll                   # 让带空格/中文的文件名原样发布
 ├── assets/
 │   ├── style.css               # 黑金视觉系统
-│   └── app.js                  # 网格渲染 + post 弹层轮播
+│   ├── gallery-core.js         # 文件名 → post 分组（前后端共用）
+│   └── app.js                  # 网格渲染 + post 弹层轮播 + 读取列表
 ├── images/                     # ← 你的作品图都放这里
-├── manifest.json               # 自动生成，勿手改
-├── scripts/build-manifest.js   # 文件名 → post 分组
-└── .github/workflows/deploy.yml # 推送即部署
+└── scripts/build-manifest.js   # 可选：生成固定 manifest.json
 ```
 
 ## ✨ 功能
