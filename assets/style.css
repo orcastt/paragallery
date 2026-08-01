@@ -466,9 +466,12 @@ body.lb-open { overflow: hidden; }
   .about-hero-inner { width: 100%; }
   .about-heading { font-size: clamp(38px, 12vw, 60px); }
 
-  .works { padding: 64px 20px; }
-  .grid { grid-template-columns: repeat(2, 1fr); gap: 22px 16px; }
-  .card-title { font-size: 14px; }
+  .works { padding: 56px 16px; }
+  .section-label { margin-bottom: 30px; letter-spacing: 0.34em; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
+  .card { gap: 10px; }
+  .card-title { font-size: 13px; line-height: 1.25; letter-spacing: 0.12em; }
+  .card-count { top: 8px; right: 8px; min-width: 24px; height: 24px; padding: 0 7px; }
 
   .lightbox { grid-template-columns: 0 1fr 0; }
   .lb-arrow { position: fixed; top: 50%; transform: translateY(-50%); z-index: 5; width: 42px; height: 42px; }
@@ -479,7 +482,20 @@ body.lb-open { overflow: hidden; }
   .lb-thumbs { padding: 14px 16px 20px; justify-content: safe start; }
 }
 @media (max-width: 460px) {
-  .grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  .topbar { padding: 15px 16px; }
+  .nav { gap: 16px; }
+  .nav-link { font-size: 12px; letter-spacing: 0.18em; }
+  .wordmark { font-size: 14px; letter-spacing: 0.2em; }
+  .about-hero-content { padding: 32px 18px 4px; }
+  .about-bio { margin-top: 18px; }
+  .about-bio p { font-size: 15px; line-height: 1.65; }
+  .works { padding: 48px 12px; }
+  .grid { gap: 18px 10px; }
+  .card-title { font-size: 12px; letter-spacing: 0.1em; }
+  .lb-head { padding: 14px 16px 10px; }
+  .lb-title { font-size: 16px; letter-spacing: 0.12em; }
+  .lb-thumbs { gap: 8px; padding: 12px 12px 16px; }
+  .lb-thumb { width: 46px; height: 62px; }
 }
 @media (max-height: 500px) {
   .lb-thumbs { display: none; }
