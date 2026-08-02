@@ -1,42 +1,36 @@
 # 项目内容规范
 
-## 图片与作品命名
-
-每一个作品使用 `images/` 下的一个独立文件夹：文件夹名就是网站卡片上显示的作品标题。
+## 本机原图与公开网页图
 
 ```text
-images/
-  20260801 Glass Study/
-    1.jpg
-    2.jpg
-    3.jpg
-  Soft Geometry/
-    1.webp
+originals/images/     本机 PNG / JPG 原图；已被 Git 忽略，绝不上传
+images/               自动生成的 WebP；提交到 GitHub，供网页展示
+originals/about-hero.png
+assets/about-hero.webp
 ```
 
-- 文件夹名称使用英文、数字、空格和连字符；例如 `Glass Study`、`20260801 Glass Study`。
-- 如果需要排序，在作品文件夹名前加八位日期 `YYYYMMDD`。例如 `20260801 Glass Study`；新日期会排在前面，日期不会显示在网页标题中。
-- 同一作品的所有图片放在同一个文件夹中。
-- 图片按文件名自然排序，第一张为作品封面；建议用 `1.jpg`、`2.jpg`、`3.jpg` 连续编号。
-- 不要在 `images/` 根目录直接放作品图片，也不要混入说明文件或隐藏文件。
+原图与公开图的文件夹结构相同。将新作品放到 `originals/images/`，再运行：
 
-## 图片尺寸与格式
+```powershell
+& 'C:\Users\orcas\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' scripts/build-webp.py
+```
 
-- 推荐作品图片比例：3:4 竖图。
-- 推荐上传尺寸：长边 1600–2400px；长边低于 1600px 不会被放大。
-- 推荐单张原图：不超过 5MB；上传前尽量保持在 1–3MB，以减少 Git 仓库体积。
-- 支持：JPG、JPEG、PNG、WebP、GIF、AVIF、SVG。
-- 照片优先使用 JPG 或 WebP；PNG 只用于需要透明背景或清晰线稿的作品。
-- iPhone 的 HEIC 请先导出为 JPG。
+脚本会生成最长边不超过 1600px、质量为 82 的 WebP，并清除图片元数据。只提交 `images/` 中生成的 WebP；不要提交 `originals/`。
 
-## 发布时的自动处理
+## 命名
 
-每次推送到 `main`，GitHub Pages 发布工作流会：
+一个作品对应一个文件夹，文件夹名就是网页显示的标题：
 
-1. 处理 JPG、JPEG、PNG、WebP；
-2. 自动旋转至正确方向；
-3. 将长边限制为 1600px（不会放大较小图片）；
-4. 清除 EXIF 等元数据，并转换为质量 80 的 WebP 网页版本；
-5. 保留目录、文件名与作品分组，再部署压缩版本。
+```text
+originals/images/20260801 Glass Study/
+  1.png
+  2.png
+```
 
-GIF、AVIF 和 SVG 会原样发布。网页只使用压缩后的发布产物，但 `images/` 中上传的原图仍会保留在公开仓库历史中；请勿上传不希望公开的原始素材。
+- 日期 `YYYYMMDD` 只控制作品排序，网页不会显示日期。
+- 每组图片从 `1.png` 连续编号；第一张是封面。
+- 生成后的网页版本将对应为 `1.webp`、`2.webp`。
+
+## 头像
+
+将头像原图保存为 `originals/about-hero.png`，运行同一脚本后会生成 `assets/about-hero.webp`。建议横图，人物位于右侧。

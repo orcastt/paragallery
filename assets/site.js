@@ -23,7 +23,7 @@ window.SITE = {
     heading: 'Parametric\nGallery',
     // 你的 16:9 横向头像：传到 assets/ 后改成对应文件名，例如 'assets/about-hero.jpg'。
     // 传之前先用这张占位图。人物/头部放在图片右侧效果最好。
-    heroImage: 'assets/about-hero.png',
+    heroImage: 'assets/about-hero.webp',
     // 简介，每个字符串是一段（英文）。随便改成你自己的。
     bio: [
       'UCL AA Master of Architecture · PhD in Architecture, University of Cambridge.',
