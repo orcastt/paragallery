@@ -26,8 +26,8 @@ window.SITE = {
     heroImage: 'assets/about-hero.jpg',
     // 简介，每个字符串是一段（英文）。随便改成你自己的。
     bio: [
-      'A parametric designer exploring the generative logic of form through algorithms and computational geometry.',
-      'Each piece is driven by a tunable parameter system — shift a few variables and one prototype evolves into hundreds of states. A record of those moments: same origin, different form.',
+      'UCL AA Master of Architecture · PhD in Architecture, University of Cambridge.',
+      'Exploring biological architectural form, biomaterials and intelligent construction. This collection presents parametric form studies and AI digital art.',
     ],
     // 联系方式（留空的会自动隐藏）
     contact: {
