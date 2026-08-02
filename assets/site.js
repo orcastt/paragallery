@@ -4,7 +4,7 @@
    ──────────────────────────────────────────────────────────────── */
 window.SITE = {
   // 顶部字标 & 页脚署名
-  wordmark: 'PARAMETRIC',
+  wordmark: 'CHU HENG TAN',
   author: '@TT',
 
   // 作品区小标题（图片 gallery 上方）
@@ -15,7 +15,7 @@ window.SITE = {
   branch: 'main',
 
   // 右上角外链（不需要就设为 null）
-  link: { label: 'Instagram', url: 'https://github.com/orcastt/paragallery' },
+  link: null,
 
   // ── 顶部「关于我」大图区 ──
   about: {
@@ -23,7 +23,7 @@ window.SITE = {
     heading: 'Parametric\nGallery',
     // 你的 16:9 横向头像：传到 assets/ 后改成对应文件名，例如 'assets/about-hero.jpg'。
     // 传之前先用这张占位图。人物/头部放在图片右侧效果最好。
-    heroImage: 'assets/about-hero.svg',
+    heroImage: 'assets/about-hero.jpg',
     // 简介，每个字符串是一段（英文）。随便改成你自己的。
     bio: [
       'A parametric designer exploring the generative logic of form through algorithms and computational geometry.',
@@ -33,7 +33,7 @@ window.SITE = {
     contact: {
       email: '',                          // 例如 'you@example.com'
       instagram: '',                      // 例如 'https://instagram.com/xxx'
-      github: 'https://github.com/orcastt',
+      github: '',
     },
   },
 };
