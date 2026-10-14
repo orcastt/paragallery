@@ -1,6 +1,8 @@
 .DS_Store
 Thumbs.db
 node_modules/
+dist/
+.preview/
 originals/
 
 # manifest.json is optional — the live site reads images/ from the GitHub API.

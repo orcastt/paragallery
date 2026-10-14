@@ -521,3 +521,9 @@ body.lb-open { overflow: hidden; }
   * { transition: none !important; animation: none !important; }
   html { scroll-behavior: auto; }
 }
+
+@media (max-width: 460px) {
+  .nav { gap: 12px; }
+  .nav-link { font-size: 10px; letter-spacing: .15em; }
+  .wordmark { font-size: 14px; letter-spacing: .18em; }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "paragallery",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-site.js",
+    "dev": "node scripts/dev-server.js",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "dependencies": { "three": "0.186.1" },
+  "devDependencies": { "esbuild": "0.28.2" }
+}

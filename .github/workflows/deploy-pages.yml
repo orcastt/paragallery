@@ -24,18 +24,27 @@ jobs:
       - name: Check out site
         uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Verify public gallery contains WebP only
         shell: bash
         run: |
           ! find images -type f ! -iname '*.webp' -print -quit | grep -q .
 
-      - name: Generate gallery manifest
-        run: node scripts/build-manifest.js
+      - name: Build and verify gallery
+        run: npm test && npm run build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
 
       - name: Deploy to GitHub Pages
         id: deployment

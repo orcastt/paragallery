@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Chu Heng Tan — a drifting, immersive black-space particle museum.">
+  <title>Particle Museum · Chu Heng Tan</title>
+  <link rel="stylesheet" href="assets/fonts.css">
+  <link rel="stylesheet" href="assets/particles.css">
+  <script src="assets/site.js"></script>
+  <script src="assets/particles-config.js"></script>
+</head>
+<body>
+  <main class="space" id="space">
+    <div id="viewport" aria-label="交互三维点云展厅"></div>
+    <header class="space-header">
+      <a class="brand" href="index.html"><span>CHU HENG TAN</span><small>PARAMETRIC GALLERY</small></a>
+      <div class="space-label"><span class="live-dot"></span> PARTICLE MUSEUM <span class="label-rule"></span> A JOURNEY THROUGH FORM</div>
+      <a class="gallery-link" href="index.html#works">图片作品集 <span>↗</span></a>
+    </header>
+    <div class="scene-meta"><span id="source-type">正在准备空间</span><span id="performance">—</span><span id="journey-status">VOYAGE · 0000 M</span></div>
+    <div class="museum-actions"><button id="reference-toggle" aria-expanded="false" aria-controls="reference">原作对照 ↗</button><button id="immersive" aria-pressed="false" title="I 键切换沉浸界面">沉浸模式 ⤢</button></div>
+    <section class="reference panel" id="reference" hidden aria-label="原作图片参考"><button id="reference-close" class="icon-button" aria-label="关闭原作参考">×</button><div id="reference-frame"><img id="reference-image" alt="当前作品的原作渲染图"></div><p id="reference-plate"></p><button id="reference-full" hidden>查看完整原图 ↗</button><div class="reference-view-controls"><button id="structure-view" aria-pressed="false" hidden>结构线核对</button><button id="photo-match" hidden>对齐图 3 视角</button></div><p id="reference-note">按原图的可见结构逐件建模</p><p id="inference-note">不可见部分为估计，非原模型的精确恢复。</p><a id="download-model" download hidden>下载推断模型 · OBJ ↓</a></section>
+    <aside class="tools" aria-label="视角控制">
+      <button id="voyage" title="沿展览航线向前行进" aria-pressed="true"><span>↝</span><small>连续航行</small></button>
+      <button id="explore" title="自由漫游：右键转向，WASD 移动，Q/E 升降" aria-pressed="false"><span>◎</span><small>自由漫游</small></button>
+      <button id="reset" title="围绕当前作品观赏" aria-pressed="false"><span>⌂</span><small>单件观赏</small></button>
+      <button id="settings-toggle" aria-expanded="false" aria-controls="settings"><span>☷</span><small>粒子设置</small></button>
+      <button id="fullscreen" title="全屏展厅"><span>⛶</span><small>全屏</small></button>
+    </aside>
+    <section class="settings panel" id="settings" hidden aria-label="粒子设置">
+      <div class="panel-title">SPACE PARAMETERS <button class="icon-button" id="settings-close" aria-label="关闭设置">×</button></div>
+      <label>航行速度 <output id="speed-value">2.2</output><input id="speed" type="range" min="0.4" max="6" step="0.1" value="2.2"></label>
+      <label>触碰强度 <output id="motion-value">0.70</output><input id="motion" type="range" min="0" max="1.5" step="0.05" value="0.70"></label>
+      <label>粒子大小 <output id="size-value">1.5</output><input id="point-size" type="range" min="0.6" max="3" step="0.1" value="1.5"></label>
+      <label class="select-label">近处粒子密度<select id="quality"><option value="64000">64,000 · 轻量</option><option value="160000" selected>160,000 · 精细</option><option value="320000">320,000 · 超精细</option></select></label>
+      <label class="select-label">作品来源<select id="source"><option value="inferred">依原图推断三维模型</option><option value="image">平面原图参考 · 非重构</option></select></label>
+      <label class="select-label">汇聚方式<select id="formation"><option value="-1">沿途交替</option><option value="0">螺旋汇聚</option><option value="1">星尘聚合</option><option value="2">粒子雨</option><option value="3">分层重组</option></select></label>
+      <label class="select-label">粒子颜色<select id="palette"><option value="0">作品原色</option><option value="1">香槟金</option><option value="2">冷白</option></select></label>
+      <label class="import-model" for="model-input">＋ 为当前作品导入三维模型</label>
+      <input id="model-input" type="file" accept=".glb,.obj,.ply,.stl" hidden>
+      <p class="model-note">GLB / OBJ / PLY / STL · 本地读取，不上传。导入后按真实几何采样，当前会话有效。</p>
+    </section>
+    <div class="message" id="message" role="status" aria-live="polite">正在将作品化为粒子…</div>
+    <section class="work-info" aria-live="polite">
+      <p class="eyebrow">FORM STUDY <span id="work-number">01 / 64</span></p>
+      <h1 id="work-title">Particle Museum</h1>
+      <div class="work-caption"><span id="work-note">航行于形态之间</span><button id="plate-next" title="切换原作参考的下一张图">参考 <span id="plate-number">01 / 01</span> ↗</button></div>
+    </section>
+    <div class="interaction-modes" role="group" aria-label="粒子交互方式"><button data-interaction="0" aria-pressed="true">01 触碰</button><button data-interaction="1" aria-pressed="false">02 推开</button><button data-interaction="2" aria-pressed="false">03 吸引</button><button data-interaction="3" aria-pressed="false">04 轻旋</button><button id="burst" title="空格键：少量粒子轻散后回弹">✧ 轻散</button></div>
+    <div class="interaction-hint" id="interaction-hint"><span class="hint-mark">↝</span>自动向前 · 右键环顾 · 滚轮推进<br><span>左键局部触碰 · 松手回弹 · 双击下一件</span></div>
+    <div class="flight-controls" id="flight-controls" hidden><button id="fly-forward" aria-label="向前移动">↑ 前进</button><button id="fly-back" aria-label="向后移动">↓ 后退</button></div>
+    <footer class="space-footer">
+      <div class="transport">
+        <button id="previous" class="arrow" aria-label="上一件作品" disabled>←</button>
+        <button id="next" class="arrow" aria-label="下一件作品" disabled>→</button>
+        <div class="transport-rule"></div>
+        <button id="pause" aria-pressed="false" title="暂停航行与粒子动态">Ⅱ</button>
+        <button id="autoplay" aria-pressed="true" title="开关连续向前航行">航行中</button>
+      </div>
+      <div class="filmstrip" id="filmstrip" aria-label="全部作品"></div>
+      <button class="all-works" id="library-toggle" aria-expanded="false" aria-controls="library">▦ <span>全部作品</span><small id="work-total">64</small></button>
+    </footer>
+    <div class="progress-track"><div id="tour-progress"></div></div>
+    <section class="library" id="library" role="dialog" aria-modal="true" hidden aria-label="全部作品目录">
+      <header><div><p class="eyebrow">THE COLLECTION</p><h2>所有形态，流动成空间。</h2></div><button id="library-close" class="icon-button" aria-label="关闭作品目录">×</button></header>
+      <p id="model-progress" class="collection-progress"></p>
+      <label class="search"><span>⌕</span><input id="search" placeholder="搜索作品 / Search the collection" aria-label="搜索作品"></label>
+      <div class="library-grid" id="library-grid"></div>
+      <p id="search-empty" hidden>没有匹配的作品。</p>
+    </section>
+    <noscript><p class="no-script">此展厅需要 JavaScript。<a href="index.html">查看图片作品集</a></p></noscript>
+  </main>
+  <script type="module" src="assets/particles.js"></script>
+</body>
+</html>
